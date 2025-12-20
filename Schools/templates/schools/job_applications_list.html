@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}طلبات التقديم لـ: {{ job_posting.title }}{% endblock %}
+
+{% block heade %}
+{% include 'partials/schools_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+        <div>
+            <h2 class="mb-1">طلبات التقديم لوظيفة:</h2>
+            <h3 class="text-primary fw-bold">{{ job_posting.title }}</h3>
+        </div>
+        <a href="{% url 'schools:job_posting_list' %}" class="btn btn-secondary mt-2 mt-md-0">
+            <i class="fas fa-arrow-left me-1"></i> العودة إلى كل الوظائف
+        </a>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if applications %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>المعلم</th>
+                    <th>تاريخ التقديم</th>
+                    <th>الحالة الحالية</th>
+                    <th>تغيير الحالة</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr>
+                    <td>
+                        {# يمكن لاحقاً جعل هذا رابطاً لملف المعلم الشخصي #}
+                        <strong>{{ application.teacher.full_name }}</strong>
+                    </td>
+                    <td>{{ application.applied_at|date:"Y-m-d H:i" }}</td>
+                    <td>
+                        <span
+                            class="badge rounded-pill fs-6 {% if application.status == 'PENDING' %}bg-warning text-dark{% elif application.status == 'ACCEPTED' %}bg-success{% elif application.is_rejected %}bg-danger{% else %}bg-info{% endif %}">
+                            {{ application.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            {% if application.status == 'PENDING' %}
+                            <form action="{% url 'schools:update_application_status' application.pk %}" method="post"
+                                class="d-inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="status" value="ACCEPTED">
+                                <button type="submit" class="btn btn-sm btn-success" title="قبول">
+                                    <i class="fas fa-check"></i> قبول
+                                </button>
+                            </form>
+                            <form action="{% url 'schools:update_application_status' application.pk %}" method="post"
+                                class="d-inline ms-1">
+                                {% csrf_token %}
+                                <input type="hidden" name="status" value="REJECTED">
+                                <button type="submit" class="btn btn-sm btn-danger" title="رفض">
+                                    <i class="fas fa-times"></i> رفض
+                                </button>
+                            </form>
+                            {% else %}
+                            <span class="text-muted small">تم اتخاذ إجراء</span>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center p-4">
+        <i class="fas fa-info-circle fa-2x mb-2"></i>
+        <p class="mb-0">لا توجد طلبات تقديم لهذه الوظيفة حتى الآن.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

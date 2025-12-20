@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}طلباتي المقدمة{% endblock %}
+
+{% block heade %}
+    {% include 'partials/teacher_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">سجل طلبات التوظيف</h2>
+
+    {% if applications %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>الوظيفة</th>
+                        <th>المدرسة</th>
+                        <th>تاريخ التقديم</th>
+                        <th class="text-center">الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app in applications %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'teachers:job_detail' app.job.pk %}" class="fw-bold text-decoration-none">{{ app.job.title }}</a>
+                            </td>
+                            <td>{{ app.job.school.school_name }}</td>
+                            <td>{{ app.applied_at|date:"d M, Y" }}</td>
+                            <td class="text-center">
+                                {% if app.status == 'ACCEPTED' %}
+                                    <span class="badge rounded-pill bg-success fs-6">مقبول</span>
+                                {% elif app.status == 'REJECTED' %}
+                                    <span class="badge rounded-pill bg-danger fs-6">مرفوض</span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-warning text-dark fs-6">قيد المراجعة</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center p-4">
+            <p class="mb-0">لم تقم بالتقديم على أي وظيفة حتى الآن. <a href="{% url 'teachers:job_list' %}">تصفح الوظائف المتاحة</a>.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}

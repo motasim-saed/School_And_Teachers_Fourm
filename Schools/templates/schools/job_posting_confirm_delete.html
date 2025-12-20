@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تأكيد حذف إعلان وظيفة{% endblock %}
+{% block heade %}
+    {% include 'partials/schools_header.html' %}
+{% endblock heade %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">تأكيد حذف إعلان وظيفة</h3>
+                </div>
+                <div class="card-body">
+                    <p>هل أنت متأكد أنك تريد حذف إعلان الوظيفة "<strong>{{ job_posting.title }}</strong>"؟</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">تأكيد الحذف</button>
+                        <a href="{% url 'schools:job_posting_list' %}" class="btn btn-secondary">إلغاء</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

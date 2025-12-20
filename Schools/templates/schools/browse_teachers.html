@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تصفح المعلمين{% endblock %}
+
+{% block heade %}
+{% include 'partials/schools_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- عمود الفلترة والبحث -->
+        <div class="col-lg-3">
+            <div class="card shadow-sm sticky-top" style="top: 100px;">
+                <div class="card-header">
+                    <h5><i class="fas fa-filter me-2"></i> فلترة البحث</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get">
+                        <div class="mb-3">
+                            <label for="q" class="form-label">بحث بالاسم أو النبذة</label>
+                            <input type="text" name="q" id="q" class="form-control" value="{{ search_query }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="specialization" class="form-label">بحث بالتخصص</label>
+                            <input type="text" name="specialization" id="specialization" class="form-control"
+                                value="{{ specialization_query }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">بحث</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- عمود عرض النتائج -->
+        <div class="col-lg-9">
+            <h3>قائمة المعلمين المسجلين</h3>
+            <hr>
+            {% for teacher in teachers %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+
+                    <!-- ======================= التعديل الرئيسي هنا ======================= -->
+                    <div class="d-flex align-items-center">
+                        <!-- الصورة أولاً -->
+                        <a href="{% url 'teachers:teacher_detail' teacher.pk %}" class="text-decoration-none">
+                            {% if teacher.profile_picture %}
+                            <img src="{{ teacher.profile_picture.url }}" alt="صورة المعلم" class="rounded-circle"
+                                width="80" height="80" style="object-fit: cover;">
+                            {% else %}
+                            <img src="{% static 'images/default-avatar.png' %}" alt="صورة المعلم" class="rounded-circle"
+                                width="80" height="80" style="object-fit: cover;">
+                            {% endif %}
+                        </a>
+
+                        <!-- المحتوى النصي ثانياً، مع إضافة هامش البداية -->
+                        <div class="ms-3"> {# <-- استخدمنا ms-3 بدلاً من me-3 على الصورة #} <h5 class="card-title mb-1">
+                                <a href="{% url 'teachers:teacher_detail' teacher.pk %}"
+                                    class="text-dark text-decoration-none">
+                                    {{ teacher.full_name }}
+                                </a>
+                                </h5>
+                                <p class="card-text text-muted mb-2">{{ teacher.bio|truncatewords:20 }}</p>
+                                {% if teacher.cv_file %}
+                                <a href="{{ teacher.cv_file.url }}" class="btn btn-sm btn-outline-primary"
+                                    target="_blank">
+                                    <i class="fas fa-file-alt me-1"></i> عرض السيرة الذاتية
+                                </a>
+                                {% endif %}
+                                <a href="{% url 'messaging:start_conversation' teacher.user.id %}"
+                                    class="btn btn-sm btn-outline-success ms-2">
+                                    <i class="fas fa-envelope me-1"></i> مراسلة
+                                </a>
+                        </div>
+                    </div>
+                    <!-- ======================= نهاية التعديل ======================= -->
+
+                </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-info">لا توجد نتائج تطابق بحثك.</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+ملتقى المدارس والمعلمين - المنصة الرائدة لربط المدارس بالمعلمين
+{% endblock title %}
+# =================== هذا هو الحل =================== #}
+{% block heade %}
+    {% include 'partials/core_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+ <!-- Floating Register Button -->
+    <a href="#register" class="floating-register-btn">
+        <i class="fas fa-user-plus me-2"></i>سجل الآن
+    </a>
+   
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content" >
+                        <h1 class="hero-title">مرحباً بك في ملتقى المدارس والمعلمين</h1>
+                        <p class="hero-subtitle">المنصة الرائدة لربط المدارس بأفضل المعلمين المؤهلين</p>
+                        <p class="hero-description">
+                            نحن نسعى لتطوير التعليم من خلال ربط المدارس بالمعلمين المتميزين، 
+                            وتوفير بيئة تفاعلية تساعد على تبادل الخبرات والمعرفة لبناء مستقبل تعليمي أفضل.
+                        </p>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="#register" class="btn btn-primary-custom">
+                                <i class="fas fa-rocket me-2"></i>ابدأ الآن
+                            </a>
+                            <a href="#about" class="btn btn-outline-custom">
+                                <i class="fas fa-info-circle me-2"></i>اعرف المزيد
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="text-center">
+                        <i class="fas fa-users-cog" style="font-size: 15rem; color: rgba(255,255,255,0.1);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="section-title" data-
+                    ="fade-up">عن منصة ملتقى المدارس والمعلمين</h2>
+                    <p class="section-subtitle" >
+                        نحن نؤمن بأن التعليم الجيد يبدأ بالمعلم المناسب في المكان المناسب
+                    </p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card"  data-aos-delay="100">
+                        <div class="feature-icon teacher">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h4>للمعلمين</h4>
+                        <p>
+                            أنشئ ملفك الشخصي المهني، اعرض مؤهلاتك وخبراتك، 
+                            وتقدم لأفضل الفرص الوظيفية في المدارس المرموقة.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card"  data-aos-delay="200">
+                        <div class="feature-icon school">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <h4>للمدارس</h4>
+                        <p>
+                            ابحث عن المعلمين المؤهلين، انشر إعلانات الوظائف، 
+                            وقم بإدارة عملية التوظيف بكفاءة وسهولة.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card"  data-aos-delay="300">
+                        <div class="feature-icon connect">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4>التواصل المباشر</h4>
+                        <p>
+                            منصة آمنة وموثوقة للتواصل بين المدارس والمعلمين، 
+                            مع أدوات متقدمة لإدارة عملية التوظيف.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section id="stats" class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="section-title text-white" >أرقام تتحدث عن نجاحنا</h2>
+                    <p class="section-subtitle text-white-50"  data-aos-delay="100">
+                        انضم إلى مجتمعنا المتنامي من المعلمين والمدارس
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card"  data-aos-delay="100">
+                        <div class="stat-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <span class="stat-number" data-count="400">0</span>
+                        <div class="stat-label">معلم مسجل</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card"  data-aos-delay="200">
+                        <div class="stat-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <span class="stat-number" data-count="600">0</span>
+                        <div class="stat-label">مدرسة شريكة</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card" data-aos-delay="300">
+                        <div class="stat-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <span class="stat-number" data-count="250">0</span>
+                        <div class="stat-label">فرصة عمل ناجحة</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card"  data-aos-delay="400">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="stat-number" data-count="98">0</span>
+                        <div class="stat-label">% نسبة الرضا</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How it Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="section-title" >كيف تعمل المنصة؟</h2>
+                    <p class="section-subtitle"  data-aos-delay="100">
+                        خطوات بسيطة للوصول إلى هدفك
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="step-card border rounded-4 p-4 h-100" data-aos-delay="100">
+                    <div class="step-number">1</div>
+                    <h4 class="step-title">إنشاء الحساب</h4>
+                    <p class="step-description">
+                        سجل كمعلم أو مدرسة وأنشئ ملفك الشخصي المهني
+                    </p>
+                </div>
+            </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="step-card border rounded-4 p-4 h-100"  data-aos-delay="200">
+                        <div class="step-number">2</div>
+                        <h4 class="step-title">إكمال الملف</h4>
+                        <p class="step-description">
+                            أضف مؤهلاتك وخبراتك أو معلومات مدرستك
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="step-card border rounded-4 p-4 h-100"  data-aos-delay="300">
+                        <div class="step-number">3</div>
+                        <h4 class="step-title">البحث والتقديم</h4>
+                        <p class="step-description">
+                            ابحث عن الفرص المناسبة وتقدم أو انشر إعلانات
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 ">
+                    <div class="step-card border rounded-4 p-4 h-100" data-aos-delay="400">
+                        <div class="step-number">4</div>
+                        <h4 class="step-title">التواصل والتوظيف</h4>
+                        <p class="step-description">
+                            تواصل مباشرة وأكمل عملية التوظيف بنجاح
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section id="register" class="cta-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="cta-title" >هل أنت مستعد للانضمام إلينا؟</h2>
+                    <p class="cta-description"  data-aos-delay="100">
+                        ابدأ رحلتك معنا اليوم واكتشف الفرص اللامحدودة في عالم التعليم
+                    </p>
+                    <div class="d-flex gap-3 justify-content-center flex-wrap" data-aos-delay="200">
+                        {% comment %} <a href="{% url 'user_type_selection' %}" class="btn btn-primary-custom btn-lg"> {% endcomment %}
+                        <a href="{% url "user:register_choice" %}" class="btn btn-primary-custom btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>سجل الآن
+                        </a>
+                        {% comment %} <a href="{% url 'login' %}" class="btn btn-outline-custom btn-lg"> {% endcomment %}
+                        <a href="{% url "user:login" %}" class="btn btn-outline-custom btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>تسجيل الدخول
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+{% endblock content %}
+{% block extra_scripts %}
+    <script>
+       
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current);
+                }, 16);
+            });
+        }
+        
+        // Trigger counter animation when stats section is visible
+        const statsSection = document.getElementById('stats');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        
+        observer.observe(statsSection);
+        
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+        
+        // Hide floating button on CTA section
+        const ctaSection = document.getElementById('register');
+        const floatingBtn = document.querySelector('.floating-register-btn');
+        
+        const ctaObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    floatingBtn.style.opacity = '0';
+                    floatingBtn.style.pointerEvents = 'none';
+                } else {
+                    floatingBtn.style.opacity = '1';
+                    floatingBtn.style.pointerEvents = 'auto';
+                }
+            });
+        });
+        
+        ctaObserver.observe(ctaSection);
+    </script>
+{% endblock extra_scripts %}

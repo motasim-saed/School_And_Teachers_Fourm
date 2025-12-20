@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}لوحة تحكم المعلم{% endblock %}
+
+{% block heade %}
+{% include 'partials/teacher_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- رسائل الترحيب والإشعارات -->
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <!-- بطاقة الترحيب والملخص -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        {% if profile.profile_picture %}
+                        <img src="{{ profile.profile_picture.url }}" alt="الصورة الشخصية" class="rounded-circle me-4"
+                            width="80" height="80" style="object-fit: cover;">
+                        {% else %}
+                        <img src="{% static 'images/default-avatar.png' %}" alt="الصورة الشخصية"
+                            class="rounded-circle me-4" width="80" height="80" style="object-fit: cover;">
+                        {% endif %}
+                        <div>
+                            <h3 class="mb-0">مرحباً بعودتك، {{ user.first_name }}!</h3>
+                            <p class="text-muted">هنا ملخص سريع لنشاطك على المنصة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- بطاقات الإحصائيات -->
+    <div class="row">
+        <!-- إجمالي الطلبات المقدمة -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-file-alt fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">إجمالي الطلبات</h5>
+                    <p class="card-text fs-2 fw-bold">{{ applications_count }}</p>
+                    <a href="{% url 'teachers:my_applications' %}" class="btn btn-outline-primary">عرض كل الطلبات</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- الطلبات المقبولة -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">الطلبات المقبولة</h5>
+                    <p class="card-text fs-2 fw-bold">{{ accepted_count }}</p>
+                    <a href="{% url 'teachers:my_applications' %}?status=ACCEPTED" class="btn btn-outline-success">عرض
+                        الطلبات المقبولة</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- تصفح الوظائف -->
+        <div class="col-md-12 col-lg-4 mb-4">
+            <div class="card text-center h-100 bg-light border-0">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <i class="fas fa-search fa-3x text-info mb-3"></i>
+                    <h5 class="card-title">هل تبحث عن فرصة جديدة؟</h5>
+                    <p class="text-muted">اكتشف أحدث الوظائف المتاحة في أفضل المدارس.</p>
+                    <a href="{% url 'teachers:job_list' %}" class="btn btn-info text-white mt-auto">تصفح الوظائف
+                        الآن</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

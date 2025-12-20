@@ -1,0 +1,62 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        
+        <!-- 1. الشعار (Logo) -->
+        {% comment %} <a class="navbar-brand" href="{% url 'visitor:index' %}"> {% endcomment %}
+            <img src="" alt="شعار المنصة" width="120">
+        </a>
+        
+        <!-- 2. زر تبديل العرض في الموبايل -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- 3. الروابط الرئيسية -->
+        <div class="collapse navbar-collapse" id="main-nav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">المدارس</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">المعلمين</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">الوظائف</a>
+                </li>
+            </ul>
+            
+            <!-- 4. منطقة المستخدم (الجزء الذكي) -->
+            <div class="d-flex align-items-center">
+                {% if user.is_authenticated %}
+                    <!-- إذا كان المستخدم مسجلاً -->
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="" alt="mdo" width="32" height="32" class="rounded-circle">
+                            <span class="ms-2">{{ user.username }}</span>
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            {% comment %} <li><a class="dropdown-item" href="{% url 'home:dashboard' %}">لوحة التحكم</a></li> {% endcomment %}
+                            <li><a class="dropdown-item" href="#">تعديل الملف الشخصي</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                {% comment %} <form action="{% url 'user:logout' %}" method="post" class="d-inline"> {% endcomment %}
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item">تسجيل الخروج</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <!-- إذا كان المستخدم زائراً -->
+                    <a href="{% url 'user:login' %}" class="btn btn-outline-primary me-2">تسجيل الدخول</a>
+                    <a href="#" class="btn btn-primary">إنشاء حساب</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

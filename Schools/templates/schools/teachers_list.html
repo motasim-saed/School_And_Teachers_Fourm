@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}قائمة المتقدمين{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>قائمة المتقدمين</h2>
+        <a href="{% url 'schools:school_dashboard' %}" class="btn btn-secondary">العودة إلى لوحة التحكم</a>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if applications %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>اسم المعلم</th>
+                    <th>البريد الإلكتروني</th>
+                    <th>رقم الجوال</th>
+                    <th>المهارات</th>
+                    <th>السيرة الذاتية (CV)</th>
+                    <th>الوظيفة المتقدم لها</th>
+                    <th>تاريخ التقديم</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr>
+                    <td>
+                        <a href="{% url 'schools:applicant_detail' application.pk %}"
+                            class="text-decoration-none fw-bold">
+                            {{ application.teacher.full_name }}
+                        </a>
+                    </td>
+                    <td>{{ application.teacher.user.email }}</td>
+                    <td>{{ application.teacher.user.phone_number }}</td>
+                    <td>
+                        {% if application.teacher.skills %}
+                        <span class="badge bg-primary">{{ application.teacher.skills }}</span>
+                        {% else %}
+                        N/A
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if application.teacher.cv_file %}
+                        <a href="{{ application.teacher.cv_file.url }}" target="_blank"
+                            class="btn btn-sm btn-outline-secondary">عرض CV</a>
+                        {% else %}
+                        <span class="text-muted">لا يوجد</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ application.job.title }}</td>
+                    <td>{{ application.applied_at|date:"Y-m-d" }}</td>
+                    <td>
+                        <span
+                            class="badge rounded-pill {% if application.status == 'PENDING' %}bg-warning{% elif application.status == 'ACCEPTED' %}bg-success{% elif application.status == 'REJECTED' %}bg-danger{% else %}bg-info{% endif %}">
+                            {{ application.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-1">
+                            {% if application.status == 'PENDING' %}
+                            <form action="{% url 'schools:update_application_status' application.pk %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="status" value="ACCEPTED">
+                                <button type="submit" class="btn btn-sm btn-success" title="قبول">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </form>
+                            <form action="{% url 'schools:update_application_status' application.pk %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="status" value="REJECTED">
+                                <button type="submit" class="btn btn-sm btn-danger" title="رفض">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                            <a href="{% url 'messaging:start_conversation' application.teacher.user.id %}"
+                                class="btn btn-sm btn-outline-success ms-1" title="إرسال رسالة">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        لا توجد طلبات تقديم حتى الآن.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

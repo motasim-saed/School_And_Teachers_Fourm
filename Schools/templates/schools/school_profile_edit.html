@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تعديل ملف المدرسة{% endblock %}
+
+{% block heade %}
+{% include 'partials/schools_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-edit text-primary me-2"></i> تعديل الملف الشخصي</h2>
+                    <div>
+                        <a href="{% url 'schools:school_profile_view' %}" class="btn btn-secondary">إلغاء</a>
+                        <button type="submit" class="btn btn-primary">حفظ كل التغييرات</button>
+                    </div>
+                </div>
+
+                <!-- رسائل الأخطاء العامة -->
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+                {% endif %}
+
+                <!-- بطاقة بيانات المدرسة -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">
+                        <h5>بيانات المدرسة</h5>
+                    </div>
+                    <div class="card-body">
+                        {{ profile_form.as_p }}
+                    </div>
+                </div>
+
+                <!-- بطاقة بيانات الحساب -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">
+                        <h5>بيانات الحساب (البريد ورقم الجوال)</h5>
+                    </div>
+                    <div class="card-body">
+                        {{ user_form.as_p }}
+                    </div>
+                </div>
+
+                <!-- بطاقة تغيير كلمة المرور -->
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h5>تغيير كلمة المرور (اتركه فارغاً إذا لم ترد التغيير)</h5>
+                    </div>
+                    <div class="card-body">
+                        {{ password_form.as_p }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

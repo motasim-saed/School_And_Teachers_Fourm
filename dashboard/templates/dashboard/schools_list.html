@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}إدارة المدارس - لوحة التحكم{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-university me-2 text-success"></i> قائمة جميع المدارس</h2>
+        <a href="{% url 'dashboard:home' %}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-right me-1"></i> العودة للإحصائيات
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">المدرسة</th>
+                            <th>النوع</th>
+                            <th>الموقع</th>
+                            <th>تاريخ الانضمام</th>
+                            <th class="text-center">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for school in schools %}
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    {% if school.logo %}
+                                    <img src="{{ school.logo.url }}" class="rounded me-3" width="40" height="40"
+                                        style="object-fit: cover;">
+                                    {% else %}
+                                    <div class="rounded bg-light d-flex align-items-center justify-content-center me-3 border"
+                                        style="width: 40px; height: 40px;">
+                                        <i class="fas fa-school text-muted"></i>
+                                    </div>
+                                    {% endif %}
+                                    <div>
+                                        <div class="fw-bold">{{ school.school_name }}</div>
+                                        <div class="text-muted small">@{{ school.user.username }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-light text-dark border">{{ school.get_school_type_display
+                                    }}</span></td>
+                            <td>{{ school.location|default:"-" }}</td>
+                            <td>{{ school.user.date_joined|date:"Y-m-d" }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'teachers:school_detail' school.pk %}"
+                                    class="btn btn-sm btn-outline-success" title="عرض التفاصيل">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="/admin/Schools/schoolprofile/{{ school.pk }}/change/"
+                                    class="btn btn-sm btn-outline-warning" title="تعديل في الإدارة">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted">لا توجد مدارس مسجلة حالياً.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

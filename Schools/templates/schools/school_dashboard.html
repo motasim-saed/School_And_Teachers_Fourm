@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}لوحة تحكم المدرسة{% endblock %}
+
+{% block heade %}
+    {# تضمين هيدر المدارس الذي قمنا بتعديله سابقاً #}
+    {% include 'partials/schools_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container py-4">
+    
+    {# عرض أي رسائل قادمة من عمليات أخرى (مثل تسجيل الدخول) #}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">مرحباً بك في لوحة التحكم</h1>
+            <p class="col-md-8 fs-4">
+                استخدم القائمة في الأعلى للتنقل بين أقسام إدارة المدرسة، مثل عرض المتقدمين، إدارة إعلانات الوظائف، وتحديث ملفك الشخصي.
+            </p>
+            <a href="{% url 'schools:teachers_list' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-chalkboard-teacher me-2"></i>
+                عرض المتقدمين الآن
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
+
+{# تم حذف بلوك extra_scripts بالكامل لأنه لم يعد ضرورياً #}

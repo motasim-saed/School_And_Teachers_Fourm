@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if form.instance.pk %}تعديل إعلان وظيفة{% else %}إنشاء إعلان وظيفة جديد{% endif %}{% endblock %}
+
+{% block heade %}
+    {% include 'partials/schools_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas {% if form.instance.pk %}fa-edit{% else %}fa-plus-circle{% endif %} me-2"></i>
+                        {% if form.instance.pk %}تعديل إعلان وظيفة{% else %}إنشاء إعلان وظيفة جديد{% endif %}
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        
+                        {% for field in form %}
+                            <div class="mb-4">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
+                                
+                                {# هذا السطر لا يعمل كما هو متوقع، سنستخدم طريقة جانغو المدمجة #}
+                                <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" {% if field.value %}value="{{ field.value }}"{% endif %}>
+                                
+                                {% if field.help_text %}
+                                    <div class="form-text text-muted small mt-1">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            {# =================== التعديل هنا =================== #}
+                            <a href="{% url 'schools:job_posting_list' %}" class="btn btn-secondary">
+                                <i class="fas fa-times me-1"></i> إلغاء
+                            </a>
+                            {# =================================================== #}
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-check me-1"></i> 
+                                {% if form.instance.pk %}حفظ التعديلات{% else %}نشر الإعلان{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تفاصيل وظيفة: {{ job.title }}{% endblock %}
+
+{% block heade %}
+{% include 'partials/teacher_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">{{ job.title }}</h3>
+                    <a href="{% url 'teachers:job_list' %}" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> العودة للوظائف
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ job.school.school_name }}</h5>
+                    <p class="card-text text-muted">تاريخ النشر: {{ job.posted_at|date:"l, d F Y" }}</p>
+                    <hr>
+                    <h6><strong>الوصف الوظيفي:</strong></h6>
+                    <p>{{ job.description|linebreaks }}</p>
+                    <h6><strong>التخصص المطلوب:</strong></h6>
+                    <p>{{ job.required_specialization }}</p>
+                    <h6><strong>سنوات الخبرة المطلوبة:</strong></h6>
+                    <p>{{ job.experience_years_required }} سنوات</p>
+                </div>
+                <div class="card-footer text-center">
+                    {% if has_applied %}
+                    <button class="btn btn-success" disabled>
+                        <i class="fas fa-check-circle me-2"></i> لقد قدمت على هذه الوظيفة
+                    </button>
+                    {% elif not job.is_active %}
+                    <button class="btn btn-secondary" disabled>
+                        <i class="fas fa-lock me-2"></i> هذه الوظيفة مغلقة
+                    </button>
+                    {% else %}
+                    <form action="{% url 'teachers:apply_for_job' job.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-paper-plane me-2"></i> التقديم الآن
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

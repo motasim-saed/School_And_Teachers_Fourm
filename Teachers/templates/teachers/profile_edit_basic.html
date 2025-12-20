@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تعديل البيانات الأساسية{% endblock %}
+
+{% block heade %}
+    {% include 'partials/teacher_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h3>تعديل البيانات الأساسية</h3>
+                    </div>
+                    <div class="card-body p-4">
+
+                        {# =================== هذا هو الجزء المضاف لعرض البيانات الحالية =================== #}
+                        <div class="text-center mb-4">
+                            <img src="{{ form.instance.profile_picture.url|default:'/static/images/default-avatar.png' }}" alt="الصورة الشخصية" class="rounded-circle" width="150" height="150" style="object-fit: cover; border: 4px solid #eee;">
+                        </div>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item">
+                                <strong>الاسم الكامل:</strong> {{ user.get_full_name }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>البريد الإلكتروني:</strong> {{ user.email }}
+                            </li>
+                        </ul>
+                        {# ============================================================================== #}
+
+                        <hr>
+                        <p class="text-muted">يمكنك تحديث بياناتك أدناه:</p>
+
+                        {# لعرض الأخطاء إن وجدت #}
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                <strong>يرجى تصحيح الأخطاء التالية:</strong>
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        {# عرض الفورم بطريقة منظمة #}
+                        <div class="mb-3">
+                            <label for="{{ form.profile_picture.id_for_label }}" class="form-label">{{ form.profile_picture.label }}</label>
+                            {{ form.profile_picture }}
+                            {% for error in form.profile_picture.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.bio.id_for_label }}" class="form-label">{{ form.bio.label }}</label>
+                            {{ form.bio }}
+                            {% for error in form.bio.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.cv_file.id_for_label }}" class="form-label">{{ form.cv_file.label }}</label>
+                            {{ form.cv_file }}
+                            {% if form.instance.cv_file %}
+                                <small class="form-text text-muted">الملف الحالي: <a href="{{ form.instance.cv_file.url }}" target="_blank">عرض السيرة الذاتية</a></small>
+                            {% endif %}
+                            {% for error in form.cv_file.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                        </div>
+                        
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <a href="{% url 'teachers:teacher_dashboard' %}" class="btn btn-secondary me-2">إلغاء</a>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

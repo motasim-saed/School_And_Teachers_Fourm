@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تحديث الملف الشخصي{% endblock %}
+
+{% block heade %}
+    {% include 'partials/teacher_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-user-edit text-primary me-2"></i> تحديث الملف الشخصي</h2>
+                    <div>
+                        <a href="{% url 'teachers:teacher_dashboard' %}" class="btn btn-secondary">إلغاء</a>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if profile_form.errors or qual_formset.errors or exp_formset.errors %}
+            <div class="alert alert-danger">
+                <strong>حدث خطأ!</strong> يرجى مراجعة الحقول أدناه.
+            </div>
+        {% endif %}
+
+        {% comment %} <!-- ================= القسم الأول: المعلومات الأساسية ================= -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">المعلومات الأساسية</h5>
+            </div>
+            <div class="card-body">
+                {{ profile_form.as_p }}
+            </div>
+        </div> {% endcomment %}
+
+        <!-- ================= القسم الثاني: المؤهلات العلمية ================= -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">المؤهلات العلمية</h5>
+                <button type="button" id="add-qual-form" class="btn btn-sm btn-success">
+                    <i class="fas fa-plus me-1"></i> إضافة مؤهل
+                </button>
+            </div>
+            <div class="card-body">
+                {{ qual_formset.management_form }}
+                <div id="qual-form-list">
+                    {% for form in qual_formset %}
+                        <div class="qual-form mb-3 p-3 border rounded">
+                            {{ form.as_p }}
+                            {% if form.instance.pk %}
+                                <div class="form-check">
+                                    {{ form.DELETE }}
+                                    <label class="form-check-label" for="{{ form.DELETE.id_for_label }}">حذف هذا المؤهل</label>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- قالب النموذج الجديد للمؤهلات (مخفي) -->
+                <div id="empty-qual-form" class="d-none">
+                    <div class="qual-form mb-3 p-3 border rounded">
+                        {{ qual_formset.empty_form.as_p }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= القسم الثالث: الخبرات العملية ================= -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">الخبرات العملية</h5>
+                <button type="button" id="add-exp-form" class="btn btn-sm btn-success">
+                    <i class="fas fa-plus me-1"></i> إضافة خبرة
+                </button>
+            </div>
+            <div class="card-body">
+                {{ exp_formset.management_form }}
+                <div id="exp-form-list">
+                    {% for form in exp_formset %}
+                        <div class="exp-form mb-3 p-3 border rounded">
+                            {{ form.as_p }}
+                            {% if form.instance.pk %}
+                                <div class="form-check">
+                                    {{ form.DELETE }}
+                                    <label class="form-check-label" for="{{ form.DELETE.id_for_label }}">حذف هذه الخبرة</label>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- قالب النموذج الجديد للخبرات (مخفي) -->
+                <div id="empty-exp-form" class="d-none">
+                    <div class="exp-form mb-3 p-3 border rounded">
+                        {{ exp_formset.empty_form.as_p }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+{% endblock content %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // دالة عامة لإضافة فورم جديد من فورم-ست
+    function addForm(btnId, listId, emptyFormId, prefix) {
+        const addFormBtn = document.getElementById(btnId);
+        const formList = document.getElementById(listId);
+        const emptyFormTemplate = document.getElementById(emptyFormId).innerHTML;
+        const totalFormsInput = document.querySelector(`#id_${prefix}-TOTAL_FORMS`);
+
+        addFormBtn.addEventListener('click', function() {
+            const newFormIndex = parseInt(totalFormsInput.value);
+            const newFormHtml = emptyFormTemplate.replace(/__prefix__/g, newFormIndex);
+            
+            const newFormElement = document.createElement('div');
+            newFormElement.innerHTML = newFormHtml;
+            formList.appendChild(newFormElement.firstElementChild);
+            
+            totalFormsInput.value = newFormIndex + 1;
+        });
+    }
+
+    // تطبيق الدالة على فورم-ست المؤهلات
+    addForm('add-qual-form', 'qual-form-list', 'empty-qual-form', 'quals');
+
+    // تطبيق الدالة على فورم-ست الخبرات
+    addForm('add-exp-form', 'exp-form-list', 'empty-exp-form', 'exps');
+});
+</script>
+{% endblock extra_scripts %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}إدارة إعلانات الوظائف{% endblock %}
+
+{% block heade %}
+    {% include 'partials/schools_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3><i class="fas fa-briefcase text-primary me-2"></i>إدارة إعلانات الوظائف</h3>
+        <a href="{% url 'schools:job_posting_create' %}" class="btn btn-primary fw-bold">
+            <i class="fas fa-plus me-1"></i> إضافة إعلان جديد
+        </a>
+    </div>
+
+    {% if job_postings %}
+        <div class="list-group">
+            {% for job in job_postings %}
+            <div class="list-group-item list-group-item-action flex-column align-items-start mb-3 p-3 shadow-sm border-0 rounded">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1 fw-bold text-primary">{{ job.title }}</h5>
+                    <small class="text-muted">{{ job.posted_at|date:"d M, Y" }}</small>
+                </div>
+                <p class="mb-1 text-muted"><strong>التخصص:</strong> {{ job.required_specialization }}</p>
+                <p class="mb-2">{{ job.description|truncatewords:30 }}</p>
+                
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <a href="{% url 'schools:job_applications_list' job.pk %}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-users me-1"></i> عرض الطلبات 
+                            <span class="badge bg-light text-dark ms-1">{{ job.application_count }}</span>
+                        </a>
+                        {% if job.school.latitude and job.school.longitude %}
+                            <a href="https://www.google.com/maps/search/?api=1&query={{ job.school.latitude }},{{ job.school.longitude }}" target="_blank" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-map-marker-alt"></i> عرض الموقع
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <a href="{% url 'schools:job_posting_update' job.pk %}" class="btn btn-outline-warning btn-sm" title="تعديل">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'schools:job_posting_delete' job.pk %}" class="btn btn-outline-danger btn-sm" title="حذف">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center p-5 bg-light rounded-3">
+            <i class="fas fa-info-circle fa-3x mb-3 text-muted"></i>
+            <h4 class="fw-bold">لا توجد إعلانات وظائف حاليًا.</h4>
+            <p>ابدأ بإضافة إعلان جديد لجذب أفضل المعلمين.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

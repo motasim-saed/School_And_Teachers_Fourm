@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تصفح المدارس{% endblock %}
+
+{% block heade %}
+{% include 'partials/teacher_header.html' %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">المدارس المسجلة في المنصة</h2>
+    <hr class="mb-5">
+
+    <div class="row g-4">
+        {% for school in schools %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm school-card">
+                <div class="card-body text-center">
+
+                    <!-- الشعار -->
+                    <a href="{% url 'teachers:school_detail' school.pk %}" class="text-decoration-none">
+                        {% if school.logo %}
+                        <img src="{{ school.logo.url }}" alt="شعار {{ school.school_name }}" class="rounded-circle mb-3"
+                            width="90" height="90" style="object-fit: cover; border: 3px solid #eee;">
+                        {% else %}
+                        <div class="rounded-circle mb-3 bg-secondary d-inline-flex justify-content-center align-items-center"
+                            style="width: 90px; height: 90px; border: 3px solid #eee;">
+                            <i class="fas fa-school fa-2x text-white"></i>
+                        </div>
+                        {% endif %}
+                    </a>
+
+                    <!-- اسم المدرسة ونوعها -->
+                    <h5 class="card-title">
+                        <a href="{% url 'teachers:school_detail' school.pk %}"
+                            class="text-dark text-decoration-none hover-primary">
+                            {{ school.school_name }}
+                        </a>
+                    </h5>
+                    <p class="text-muted mb-2">
+                        <span class="badge bg-info">{{ school.get_school_type_display }}</span>
+                    </p>
+                    <p class="card-text small">{{ school.location|default:"الموقع غير محدد" }}</p>
+
+                    <!-- الإحصائيات -->
+                    <div class="d-flex justify-content-around mt-4 border-top pt-3">
+                        <div>
+                            <h6 class="mb-0 fw-bold">{{ school.active_jobs_count }}</h6>
+                            <small class="text-muted">وظيفة متاحة</small>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">{{ school.total_applications_count }}</h6>
+                            <small class="text-muted">متقدم</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-0 text-center pb-3">
+                    <a href="{% url 'teachers:school_detail' school.pk %}" class="btn btn-primary">
+                        عرض التفاصيل والوظائف <i class="fas fa-arrow-left me-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                لا توجد مدارس مسجلة في المنصة حتى الآن.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

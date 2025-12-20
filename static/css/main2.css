@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* اللون الأساسي */
+:root {
+    --main-color: #2c3e50;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: var(--main-color);
+    padding: 10px 0;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+nav ul li {
+    margin: 0 15px;
+}
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Table Styling */
+main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+table {
+    border-collapse: collapse;
+    width: 80%;
+    max-width: 800px;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+th {
+    background-color: #34495e;
+    color: white;
+}
+tr:nth-child(even) {
+    background-color: #e9ecef;
+}
+
+/* صندوق الترحيب */
+.welcome-box {
+    background-color: var(--main-color);
+    color: white;
+    padding: 50px 80px;
+    font-size: 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    text-align: center;
+}
+.welcome-box2 {
+    background-color: #3e5870; /* لون أفتح من الأساسي */
+    color: white;
+    padding: 15px 0;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* تصميم الكارد الخاص بالطالب */
+.student_card {
+    background-color: var(--main-color);
+    color: white;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    max-width: 300px;
+    text-align: center;
+    margin: 20px auto;
+}
+.student_card h2 {
+    margin: 0 0 10px;
+}
+.student_card p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+.student_card .status {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    background-color: #28a745; /* أخضر للحالة الجيدة */
+}
+
+/* Footer */
+footer {
+    background-color: var(--main-color);
+    color: white;
+    text-align: center;
+    padding: 10px;
+}

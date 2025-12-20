@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}منصة التوظيف التعليمي{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+
+    <!-- AOS -->
+    <link rel="stylesheet" href="{% static 'vendor/aos/aos.css' %}">
+
+    <!-- Swiper -->
+    <link rel="stylesheet" href="{% static 'vendor/swiper/swiper-bundle.min.css' %}">
+
+    <!-- Glightbox -->
+    <link rel="stylesheet" href="{% static 'vendor/glightbox/css/glightbox.min.css' %}">
+
+    <!-- ملف التنسيق الرئيسي الخاص بك -->
+    <link rel="stylesheet" href="{% static 'css/mein.css' %}">
+
+</head>
+
+<body class="bg-light">
+
+    {# =================== التعديل هنا =================== #}
+    {% block heade %}
+    {% if user.is_authenticated %}
+    {% if user.user_type == 'TEACHER' %}
+    {% include 'partials/teacher_header.html' %}
+    {% elif user.user_type == 'SCHOOL' %}
+    {% include 'partials/schools_header.html' %}
+    {% endif %}
+    {% else %}
+    {% include 'partials/core_header.html' %}
+    {% endif %}
+    {% endblock heade %}
+    {# =================================================== #}
+
+    <main class="py-4">
+        <div class="container">
+            {% block content %}
+
+            {% endblock content %}
+        </div>
+    </main>
+
+    <div class="bg-white border-top">
+        {% include 'partials/_footer.html' %}
+    </div>
+
+    <!-- ... (كل ملفات الـ JS الخاصة بك كما هي) ... -->
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    {% block extra_scripts %}
+    <script>
+        // إخفاء رسائل التنبيه تلقائياً بعد 5 ثوانٍ
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                var alerts = document.querySelectorAll('.alert');
+                alerts.forEach(function (alert) {
+                    var bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                });
+            }, 5000); // 5000 ميلي ثانية = 5 ثوانٍ
+        });
+    </script>
+    {% endblock %}
+</body>
+
+</html>

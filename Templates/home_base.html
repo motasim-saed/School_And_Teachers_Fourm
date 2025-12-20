@@ -1,0 +1,17 @@
+{# الخطوة 1: home.html يرث من base.html #}
+{% extends "base.html" %} 
+
+{# الخطوة 2: home.html يضع الشروط واللمسات الخاصة به #}
+
+{% block header %}
+    {# هذا شرط خاص بـ home.html فقط #}
+    {% if not user.is_authenticated %}
+        {% include 'partials/core_header.html' %}
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endblock header %}
+
+{% block content %}
+    <h1>محتوى صفحة الـ home</h1>
+{% endblock content %}

@@ -1,0 +1,598 @@
+
+        :root {
+            --primary-color: #5a54da;
+            --secondary-color: #06b6d4;
+            --accent-color: #ddaa51;
+            --success-color: #10b981;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f8fafc;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-accent: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+        }
+        
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%23ffffff08" points="0,1000 1000,0 1000,1000"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            top:10px;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+        
+        /* Floating Register Button */
+        .floating-register-btn {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: var(--gradient-accent);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .floating-register-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.6);
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4); }
+            50% { box-shadow: 0 10px 30px rgba(245, 158, 11, 0.8); }
+            100% { box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4); }
+        }
+        
+        /* Buttons */
+        .btn-primary-custom {
+            background: var(--gradient-secondary);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(79, 172, 254, 0.5);
+            color: white;
+        }
+        
+        .btn-outline-custom {
+            border: 2px solid white;
+            border-radius: 50px;
+            padding: 10px 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: white;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-custom:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* About Section */
+        .about-section {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-secondary);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(79, 172, 254, 0.1);
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .feature-icon.teacher {
+            background: var(--gradient-secondary);
+        }
+        
+        .feature-icon.school {
+            background: var(--gradient-accent);
+        }
+        
+        .feature-icon.connect {
+            background: var(--gradient-primary);
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 60px 0;
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+        
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 1.2rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        /* How it Works Section */
+        .how-it-works {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .step-card {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .step-description {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 60px 0;
+            background: var(--gradient-accent);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-description {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-description {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        .footer-links h5 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links ul li a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                top: 10px;
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .floating-register-btn {
+                right: 15px;
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+        
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* mein.css */
+
+/* تنسيق روابط التحكم في لوحة تحكم المدرسة */
+.nav-link-custom {
+    padding: 8px 16px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #495057; /* لون رمادي داكن */
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    border: 2px solid transparent;
+}
+
+.nav-link-custom:hover {
+    background-color: #e9ecef; /* لون رمادي فاتح عند المرور */
+    color: #000;
+}
+
+/* تنسيق الرابط النشط */
+.nav-link-custom.active {
+    color: #007bff; /* لون أزرق مميز */
+    background-color: #e7f3ff; /* خلفية زرقاء فاتحة */
+    border-bottom: 2px solid #007bff;
+}
+
+    
+
+/* تحسين بطاقة الوظيفة (list-group-item) */
+.job-posting-item {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 0.75rem !important; /* زيادة استدارة الحواف */
+    transition: all 0.3s ease;
+    overflow: hidden; /* لإخفاء أي عناصر تتجاوز الحواف المستديرة */
+    position: relative; /* ضروري للشريط الجانبي */
+    padding-left: 1.5rem !important; /* زيادة المساحة الداخلية */
+}
+
+/* إضافة شريط لوني جانبي للتمييز */
+.job-posting-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    background-color: #0d6efd; /* لون أزرق أساسي */
+    transition: all 0.3s ease;
+}
+
+/* تأثيرات عند مرور الماوس فوق البطاقة */
+.job-posting-item:hover {
+    transform: translateY(-5px); /* رفع البطاقة قليلاً */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important; /* ظل أكثر وضوحًا */
+    border-left-color: #0a58ca;
+}
+
+.job-posting-item:hover::before {
+    background-color: #ffc107; /* تغيير لون الشريط الجانبي إلى أصفر */
+}
+
+/* تنسيق عنوان الوظيفة */
+.job-posting-item .job-title {
+    color: #212529;
+    font-weight: 600;
+}
+
+/* تنسيق زر "عرض الطلبات" بشكل خاص */
+.btn-view-applications {
+    font-weight: 500;
+}
+
+/* تنسيق عدد المتقدمين داخل الزر */
+.btn-view-applications .application-count {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    padding: 2px 6px;
+    margin-right: 5px;
+}
+
+/* تحسين أزرار التعديل والحذف */
+.btn-action {
+    transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+    transform: scale(1.1); /* تكبير الزر قليلاً عند المرور */
+}
+
+/* تحسين مظهر رسالة "لا توجد وظائف" */
+.no-jobs-alert {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* خلفية متدرجة */
+    border: 1px dashed #ced4da;
+    color: #495057;
+}
+
+.no-jobs-alert i {
+    color: #0d6efd; /* لون الأيقونة أزرق */
+}
+
+/* مضافات */
+/* static/css/mein.css */
+
+/* =================================================== */
+/* ==      تنسيقات هيدر لوحة تحكم المدرسة         == */
+/* =================================================== */
+
+/* تنسيق الهيدر الرئيسي */
+.school-dashboard-header {
+    background-color: #ffffff !important; /* خلفية بيضاء نقية */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07); /* ظل ناعم وأنيق */
+    transition: all 0.3s ease;
+}
+
+/* تنسيق شعار لوحة التحكم */
+.dashboard-brand-link {
+    transition: transform 0.3s ease;
+}
+.dashboard-brand-link:hover {
+    transform: scale(1.05); /* تكبير بسيط عند المرور */
+}
+.dashboard-brand-link .brand-text {
+    font-weight: 700 !important; /* خط عريض */
+    color: #343a40; /* لون رمادي داكن */
+}
+
+/* تنسيق روابط التحكم الرئيسية (Tabs) */
+.nav-link-custom {
+    padding: 0.6rem 1rem; /* مساحة داخلية مريحة */
+    margin: 0 0.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #6c757d; /* لون رمادي للنص */
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent; /* خط سفلي شفاف للتحضير للتأثير */
+    position: relative;
+    top: 3px; /* لإنزال الروابط قليلاً لتتماشى مع الخط السفلي */
+}
+
+/* تأثير عند مرور الماوس فوق الروابط */
+.nav-link-custom:hover {
+    background-color: #f8f9fa; /* خلفية رمادية فاتحة جدًا */
+    color: #0056b3; /* لون أزرق أغمق */
+}
+
+/* تنسيق الرابط النشط (التبويب المفتوح حاليًا) */
+.nav-link-custom.active {
+    color: #0d6efd; /* لون أزرق أساسي */
+    font-weight: 600;
+    background-color: transparent; /* إلغاء أي خلفية */
+    border-bottom-color: #0d6efd; /* إظهار الخط السفلي الأزرق */
+}
+
+/* تنسيق زر "نشر وظيفة" */
+.btn-publish-job {
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3); /* ظل أخضر للزر */
+    transition: all 0.3s ease;
+}
+.btn-publish-job:hover {
+    transform: translateY(-2px); /* رفعه للأعلى قليلاً */
+    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
+}
+
+/* تنسيق رابط تسجيل الخروج */
+.logout-link {
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+.logout-link:hover {
+    background-color: rgba(220, 53, 69, 0.1); /* خلفية حمراء شفافة */
+    color: #dc3545 !important; /* تأكيد اللون الأحمر */
+}

@@ -1,0 +1,13 @@
+# Django/Python files to ignore
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+db.sqlite3
+media/
+staticfiles/
+.vscode/
+
+# Folder for collected static files
+/static_root/

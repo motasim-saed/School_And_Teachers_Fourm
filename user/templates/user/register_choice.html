@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block heade %}
+    {% include 'partials/core_header.html' %}
+{% endblock heade %}
+
+
+
+{% block content %}
+<div class="container text-center" style="margin-top: 150px; margin-bottom: 150px;">
+    <h1 class="mb-5">الانضمام إلى منصتنا</h1>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm ">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center p-5">
+                    <i class="fas fa-chalkboard-teacher fa-3x mb-3 text-primary"></i>
+                    <h4 class="card-title">أنا معلم</h4>
+                    <p class="card-text">انضم كمعلم لعرض مؤهلاتك والبحث عن فرص وظيفية.</p>
+                    <a href="{% url 'user:register_teacher' %}" class="btn btn-primary stretched-link">تسجيل كمعلم</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center p-5">
+                    <i class="fas fa-school fa-3x mb-3 text-success"></i>
+                    <h4 class="card-title">أنا مدرسة</h4>
+                    <p class="card-text">انضمي كمدرسة لنشر إعلانات الوظائف والبحث عن أفضل الكفاءات.</p>
+                    <a href="{% url 'user:register_school' %}" class="btn btn-success stretched-link">تسجيل كمدرسة</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

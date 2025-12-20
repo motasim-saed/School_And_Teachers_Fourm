@@ -1,0 +1,54 @@
+{% load static %}
+{# 1. تم تغيير لون الخلفية إلى رمادي داكن باستخدام كلاس مخصص #}
+<style>
+    .footer-bg-gray {
+        background-color: #343a40;
+        /* هذا لون رمادي داكن قريب من لون bg-dark ولكن أقل حدة */
+    }
+</style>
+
+<footer class="footer-bg-gray text-white py-3">
+    <div class="container">
+        {# 2. تم استخدام justify-content-between لتوزيع المسافات بين الأعمدة #}
+        <div class="row justify-content-between align-items-center">
+
+            <!-- القسم الأول: عن المنصة (عرض 5 أعمدة من 12) -->
+            <div class="col-md-5 mb-2">
+                <h6 class="text-uppercase mb-2 fw-bold text-primary">منصة التوظيف التعليمي</h6>
+                <p class="text-white-50 small mb-0">
+                    منصة متخصصة تهدف إلى تسهيل عملية التوظيف في القطاع التعليمي، حيث نصل بين المدارس الباحثة عن كفاءات
+                    والمعلمين الباحثين عن فرص وظيفية متميزة.
+                </p>
+            </div>
+
+            <!-- القسم الثاني: تواصل معنا (عرض 4 أعمدة من 12) -->
+            <div class="col-md-4 mb-2">
+                <h6 class="text-uppercase mb-2 fw-bold">تواصل معنا</h6>
+                <p class="small mb-1"><i class="fas fa-map-marker-alt me-2"></i> جامعة إب</p>
+                <a href="mailto:motasimalsalahi@gmail.com">
+                    <p class="small mb-1"><i class="fas fa-envelope me-2"></i> motasimalsalahi@gmail.com</p>
+                </a>
+
+                <!-- أيقونات وسائل التواصل الاجتماعي -->
+                <div class="mt-2">
+                    <a href="https://wa.me/967771511800" target="_blank" class="text-white me-3"
+                        aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.linkedin.com/in/motasim-saeed-alsalahi-4352b6331" target="_blank"
+                        class="text-white me-3" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://t.me/motasim771" target="_blank" class="text-white" aria-label="Telegram"><i
+                            class="fab fa-telegram-plane"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="my-2 border-secondary">
+
+        <!-- قسم حقوق النشر -->
+        <div class="text-center">
+            <p class="mb-0 text-white-50 small">
+                © {% now "Y" %} جميع الحقوق محفوظة لمنصة التوظيف التعليمي.
+            </p>
+        </div>
+    </div>
+</footer>

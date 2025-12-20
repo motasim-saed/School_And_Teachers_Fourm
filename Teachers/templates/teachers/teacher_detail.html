@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}الملف الشخصي لـ {{ profile.user.get_full_name }}{% endblock %}
+
+{% block heade %}
+{% if request.user.user_type == 'SCHOOL' %}
+{% include 'partials/schools_header.html' %}
+{% else %}
+{% include 'partials/teacher_header.html' %}
+{% endif %}
+{% endblock heade %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <!-- الكارد التعريفي العلوي -->
+        <div class="col-md-10">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center p-5">
+                    <img src="{{ profile.profile_picture.url|default:'/static/images/default-avatar.png' }}"
+                        alt="الصورة الشخصية" class="rounded-circle mb-3 shadow" width="150" height="150"
+                        style="object-fit: cover;">
+                    <h2 class="card-title fw-bold mb-2">{{ profile.full_name }}</h2>
+                    <p class="text-muted fs-5 mb-4">{{ profile.bio }}</p>
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{% url 'messaging:start_conversation' profile.user.id %}"
+                            class="btn btn-success btn-lg px-4">
+                            <i class="fas fa-envelope me-2"></i> مراسلة
+                        </a>
+                        {% if profile.cv_file %}
+                        <a href="{{ profile.cv_file.url }}" class="btn btn-outline-primary btn-lg px-4" target="_blank">
+                            <i class="fas fa-file-alt me-2"></i> السيرة الذاتية
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer bg-light text-center py-3">
+                    <div class="row">
+                        <div class="col-6 border-end">
+                            <i class="fas fa-envelope text-muted me-2"></i>
+                            <span class="fw-bold">{{ profile.user.email }}</span>
+                        </div>
+                        <div class="col-6">
+                            <i class="fas fa-phone text-muted me-2"></i>
+                            <span>{{ profile.user.phone_number|default:"غير متوفر" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- تفاصيل المؤهلات والخبرات -->
+        <div class="col-md-10">
+            <div class="row">
+                <!-- المؤهلات -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-graduation-cap me-2"></i> المؤهلات العلمية</h5>
+                        </div>
+                        <div class="card-body">
+                            {% for qual in qualifications %}
+                            <div class="mb-3 pb-3 border-bottom last-no-border">
+                                <h6 class="fw-bold text-primary">{{ qual.degree }}</h6>
+                                <p class="mb-1">{{ qual.specialization }}</p>
+                                <small class="text-muted"><i class="fas fa-university me-1"></i> {{ qual.university }} -
+                                    {{ qual.graduation_year }}</small>
+                            </div>
+                            {% empty %}
+                            <p class="text-muted text-center py-4">لا توجد مؤهلات مسجلة.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الخبرات -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="mb-0"><i class="fas fa-briefcase me-2"></i> الخبرات العملية</h5>
+                        </div>
+                        <div class="card-body">
+                            {% for exp in experiences %}
+                            <div class="mb-3 pb-3 border-bottom last-no-border">
+                                <h6 class="fw-bold text-dark">{{ exp.job_title }}</h6>
+                                <p class="mb-1 fw-bold">{{ exp.previous_school_name }}</p>
+                                <small class="text-muted">
+                                    <i class="far fa-calendar-alt me-1"></i>
+                                    {{ exp.start_date|date:"M Y" }} -
+                                    {% if exp.end_date %}{{ exp.end_date|date:"M Y" }}{% else %}الآن{% endif %}
+                                </small>
+                            </div>
+                            {% empty %}
+                            <p class="text-muted text-center py-4">لا توجد خبرات مسجلة.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .last-no-border:last-child {
+        border-bottom: none !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+</style>
+{% endblock %}
