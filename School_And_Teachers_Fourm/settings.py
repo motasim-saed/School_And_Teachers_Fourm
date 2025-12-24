@@ -159,8 +159,11 @@ MEDIA_URL = "/media/"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # الخطوة 2: تحديد مدة صلاحية الجلسة (بالثواني)
-# مثال: أسبوعان (60 ثانية * 60 دقيقة * 24 ساعة * 14 يوم)
-SESSION_COOKIE_AGE = 86400
+# تم ضبطها هنا لتكون شهر كامل (60 ثانية * 60 دقيقة * 24 ساعة * 30 يوم)
+SESSION_COOKIE_AGE = 2592000 
+
+# حفظ الجلسة في كل طلب لتجديد المدة تلقائياً
+SESSION_SAVE_EVERY_REQUEST = True
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
