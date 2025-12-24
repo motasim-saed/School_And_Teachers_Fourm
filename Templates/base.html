@@ -28,6 +28,8 @@
 
 </head>
 
+
+
 <body class="bg-light">
 
     {# =================== التعديل هنا =================== #}
@@ -72,6 +74,34 @@
         });
     </script>
     {% endblock %}
+
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "{{ ONESIGNAL_APP_ID }}",
+      //allowLocalhostAsSecureOrigin: true, // ضروري جداً للـ localhost
+      serviceWorkerPath: "/OneSignalSDKWorker.js", // أضفنا / في البداية ليعمل في كل الصفحات
+      notifyButton: {
+        enable: true,
+        size: 'medium',
+        theme: 'default',
+        position: 'bottom-right', // تأكد من عدم وجود شيء يغطيه في موقعك
+        offset: { bottom: '20px', right: '20px' },
+        displayPredicate: function() { return true; } // إجبار على الظهور
+      }
+    });
+
+    {% if user.is_authenticated %}
+    // ربط معرف المستخدم في موقعك مع ワンシグナル لتمكين الإرسال المخصص
+    await OneSignal.login("{{ user.id }}");
+    {% endif %}
+    
+    
+  });
+</script>
+
 </body>
 
 </html>

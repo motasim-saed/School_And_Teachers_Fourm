@@ -82,6 +82,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "core.context_processors.onesignal_settings",
             ],
         },
     },
@@ -174,6 +175,11 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 AUTH_USER_MODEL = "user.User"
 
 
+
 LOGIN_URL = "user:login"  # <-- هذا هو السطر الأهم لحل المشكلة
 LOGOUT_REDIRECT_URL = "user:login"
 LOGIN_REDIRECT_URL = "home"
+
+# OneSignal Configuration
+ONESIGNAL_REST_API_KEY = os.environ.get('ONESIGNAL_REST_API_KEY')
+ONESIGNAL_APP_ID = os.environ.get('ONESIGNAL_APP_ID', '09578f3c-1bbf-4ad2-8c90-b7804630a8dc')

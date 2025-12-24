@@ -1,24 +1,21 @@
-"""
-URL configuration for School_And_Teachers_Fourm project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+import os
 from django.conf import settings
+from django.http import HttpResponse
 from django.conf.urls.static import static
-
+from django.views.static import serve
 from django.contrib import admin
 from django.urls import path,include
+
+def onesignal_js(request, filename):
+    # هذا الكود يقرأ الملف ويرسله للمتصفح مع النوع الصحيح
+    file_path = os.path.join(settings.BASE_DIR, 'static', filename)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as f:
+            response = HttpResponse(f.read(), content_type="application/javascript")
+            # إضافة هذا الرأس لحل مشكلة متصفحات Chrome و Edge
+            response['Service-Worker-Allowed'] = '/'
+            return response
+    return HttpResponse(status=404)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +24,8 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls', namespace='dashboard')),      path('user/',include('user.urls',namespace='user')),
     path('',include('core.urls',namespace='core')),
     path('messages/', include('messaging.urls', namespace='messaging')),
-
+    path('OneSignalSDKWorker.js', onesignal_js, {'filename': 'OneSignalSDKWorker.js'}),
+    path('OneSignalSDKUpdaterWorker.js', onesignal_js, {'filename': 'OneSignalSDKUpdaterWorker.js'}),
     # path('',include('visitor.urls',namespace='visitor')),
 
 ]
