@@ -1,7 +1,7 @@
 import requests
 from django.conf import settings
 
-def send_onesignal_notification(heading, content, user_ids=None, url=None):
+def send_onesignal_notification(heading, content, user_ids=None, url=None, data=None, filters=None):
     """
     إرسال إشعار عبر OneSignal باستخدام REST API.
     إذا تم تمرير user_ids، سيتم الإرسال لهؤلاء المستخدمين فقط.
@@ -28,12 +28,18 @@ def send_onesignal_notification(heading, content, user_ids=None, url=None):
         # إرسال لمستخدمين محددين عبر الـ External User ID (معرف المستخدم في Django)
         # OneSignal يتوقع قائمة من السلاسل النصية (strings)
         payload["include_external_user_ids"] = [str(uid) for uid in user_ids]
+    elif filters:
+        # استخدام الفلاتر (مثل user_type)
+        payload["filters"] = filters
     else:
-        # إرسال لجميع المشتركين إذا لم يتم تحديد مستخدمين
+        # إرسال لجميع المشتركين إذا لم يتم تحديد مستخدمين أو فلاتر
         payload["included_segments"] = ["Subscribed Users"]
     
     if url:
         payload["url"] = url
+        
+    if data:
+        payload["data"] = data
 
     try:
         print(f"Sending OneSignal notification: {heading}")

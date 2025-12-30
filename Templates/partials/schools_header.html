@@ -28,14 +28,21 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{% url 'messaging:inbox' %}" class="nav-link text-dark fw-bold mx-2">
+                    <a href="{% url 'messaging:inbox' %}" class="nav-link text-dark fw-bold mx-2 position-relative">
                         <i class="fas fa-envelope me-1"></i> الرسائل
+                         <!-- هنا يمكن إضافة عداد رسائل خاص إذا توفر، حالياً سنعتمد على التنبيه العام أو نضيف منطق مشابه -->
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{% url 'schools:notification_list' %}" class="nav-link text-dark fw-bold mx-2">
+                    <a href="{% url 'schools:notification_list' %}" class="nav-link text-dark fw-bold mx-2 position-relative">
                         <i class="fas fa-bell me-1"></i> الإشعارات
+                        {% if unread_notifications_count > 0 %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ unread_notifications_count }}
+                            <span class="visually-hidden">unread notifications</span>
+                        </span>
+                        {% endif %}
                     </a>
                 </li>
 

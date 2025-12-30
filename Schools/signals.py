@@ -1,7 +1,8 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import SchoolProfile, JobPosting, JobApplication
+from .models import SchoolProfile, JobPosting, JobApplication, Notification
 from core.onesignal import send_onesignal_notification
+from user.models import User
 
 @receiver(post_save, sender=SchoolProfile)
 def notify_new_school(sender, instance, created, **kwargs):
@@ -12,6 +13,7 @@ def notify_new_school(sender, instance, created, **kwargs):
         send_onesignal_notification(
             heading="مدرسة جديدة انضمت إلينا!",
             content=f"تمت إضافة مدرسة: {instance.school_name}",
+            filters=[{"field": "tag", "key": "user_type", "relation": "=", "value": "TEACHER"}]
         )
 
 @receiver(post_save, sender=JobPosting)
@@ -23,6 +25,7 @@ def notify_new_job(sender, instance, created, **kwargs):
         send_onesignal_notification(
             heading="وظيفة شاغرة جديدة!",
             content=f"مدرسة {instance.school.school_name} تعلن عن وظيفة: {instance.title}",
+            filters=[{"field": "tag", "key": "user_type", "relation": "=", "value": "TEACHER"}]
         )
 
 @receiver(post_save, sender=JobApplication)
@@ -35,9 +38,15 @@ def notify_job_application_status(sender, instance, created, **kwargs):
         # إشعار للمدرسة (صاحبة الوظيفة)
         school_user_id = instance.job.school.user.id
         send_onesignal_notification(
-            heading="تقديم جديد على وظيفتك!",
             content=f"المعلم {instance.teacher.full_name} تقدم لوظيفة: {instance.job.title}",
             user_ids=[school_user_id]
+        )
+        
+        # إنشاء إشعار في قاعدة البيانات للمدرسة
+        Notification.objects.create(
+            user=instance.job.school.user,
+            message=f"المعلم {instance.teacher.full_name} تقدم لوظيفة: {instance.job.title}",
+            link=f"/schools/jobs/{instance.job.id}/applications/" # الرابط الصحيح لصفحة المتقدمين لهذه الوظيفة
         )
     else:
         # إذا تم تحديث الطلب (مثلاً حالة القبول)
@@ -45,7 +54,13 @@ def notify_job_application_status(sender, instance, created, **kwargs):
         if instance.status == 'ACCEPTED':
             teacher_user_id = instance.teacher.user.id
             send_onesignal_notification(
-                heading="تهانينا! تم قبول طلبك",
                 content=f"تم قبول انضمامك لمدرسة {instance.job.school.school_name} لوظيفة {instance.job.title}",
                 user_ids=[teacher_user_id]
+            )
+
+            # إنشاء إشعار في قاعدة البيانات للمعلم
+            Notification.objects.create(
+                user=instance.teacher.user,
+                message=f"تم قبول انضمامك لمدرسة {instance.job.school.school_name} لوظيفة {instance.job.title}",
+                link="/teachers/my-applications/" # رابط طلباتي
             )

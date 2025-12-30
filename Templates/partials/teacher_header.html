@@ -24,13 +24,24 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'messaging:inbox' %}" class="nav-link text-dark fw-bold mx-2">
+                    <a href="{% url 'messaging:inbox' %}" class="nav-link text-dark fw-bold mx-2 position-relative">
                         <i class="fas fa-envelope me-1"></i> الرسائل
+                        {% if unread_notifications_count > 0 %}
+                        <span class="position-absolute top-10 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
+                        {% endif %}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'teachers:my_applications' %}" class="nav-link text-dark fw-bold mx-2">
+                    <a href="{% url 'teachers:my_applications' %}" class="nav-link text-dark fw-bold mx-2 position-relative">
                         <i class="fas fa-file-alt me-1"></i> طلباتي
+                        {% if unread_notifications_count > 0 %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ unread_notifications_count }}
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                        {% endif %}
                     </a>
                 </li>
                 <li class="nav-item">

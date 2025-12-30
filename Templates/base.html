@@ -81,7 +81,7 @@
     OneSignalDeferred.push(async function(OneSignal) {
     await OneSignal.init({
       appId: "{{ ONESIGNAL_APP_ID }}",
-      //allowLocalhostAsSecureOrigin: true, // ضروري جداً للـ localhost
+      allowLocalhostAsSecureOrigin: true, // ضروري جداً للـ localhost
       serviceWorkerPath: "/OneSignalSDKWorker.js", // أضفنا / في البداية ليعمل في كل الصفحات
       notifyButton: {
         enable: true,
@@ -94,8 +94,10 @@
     });
 
     {% if user.is_authenticated %}
-    // ربط معرف المستخدم في موقعك مع ワンシグナル لتمكين الإرسال المخصص
+    console.log("Attempting OneSignal login for user: {{ user.id }}");
     await OneSignal.login("{{ user.id }}");
+    await OneSignal.setTag("user_type", "{{ user.user_type }}");
+    console.log("OneSignal login command sent.");
     {% endif %}
     
     

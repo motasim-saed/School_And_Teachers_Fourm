@@ -267,6 +267,9 @@ def notification_list(request):
    
     notifications = Notification.objects.filter(user=request.user).order_by('-created_at')
     
+    # تحديث جميع الإشعارات غير المقروءة لتصبح مقروءة بمجرد فتح الصفحة
+    Notification.objects.filter(user=request.user, is_read=False).update(is_read=True)
+    
     return render(request, 'schools/notification_list.html', {'notifications': notifications})
 
 

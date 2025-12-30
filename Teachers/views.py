@@ -318,6 +318,16 @@ def my_applications_view(request):
         'applications': applications,
         'current_status': status_filter,
     }
+    
+    # تحديث الإشعارات المتعلقة بـ "طلباتي" لتصبح مقروءة
+    # نبحث عن الإشعارات التي يحتوي رابطها على 'my-applications'
+    # نقوم بتحديث كل الإشعارات التي تحتوي على هذا الرابط
+    Notification.objects.filter(
+        user=request.user, 
+        is_read=False, 
+        link__icontains='my-applications'
+    ).update(is_read=True)
+
     return render(request, 'teachers/my_applications.html', context)
 
 

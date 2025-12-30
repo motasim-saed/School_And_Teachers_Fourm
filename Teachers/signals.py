@@ -12,4 +12,5 @@ def notify_new_teacher(sender, instance, created, **kwargs):
         send_onesignal_notification(
             heading="معلم جديد انضم إلينا!",
             content=f"انضم المعلم: {instance.full_name} إلى المنصة.",
+            filters=[{"field": "tag", "key": "user_type", "relation": "=", "value": "SCHOOL"}]
         )

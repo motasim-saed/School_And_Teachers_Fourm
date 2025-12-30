@@ -4,7 +4,8 @@ from django.db.models import Q
 from django.contrib import messages
 from .models import Conversation, Message
 from .forms import MessageForm
-from user.models import User # Assuming user.User is your custom user model
+from user.models import User 
+from Schools.models import Notification # Import Notification model
 
 @login_required
 def inbox(request):
@@ -39,6 +40,14 @@ def inbox(request):
 
     # تحويل القاموس إلى قائمة وترتيبها
     conversations = list(unique_conversations_dict.values())
+    
+    # تحديث الإشعارات المتعلقة بالرسائل لتصبح مقروءة
+    # (اختياري: يمكننا فعل ذلك فقط داخل المحادثة، لكن Inobx يظهر فيه علامة إجمالية)
+    # لكن الأفضل أن يتم مسحها عند فتح المحادثة، ولكن المستخدم طلب "بمجرد فتح الاشعار"
+    # وبما أن الإشعار في الهيدر يفتح الـ Inbox العام أحياناً، سنقوم بمسح إشعارات الرسائل هنا للتبسيط
+    # أو يمكننا الاكتفاء بمسحها داخل المحادثة.
+    # سأقوم بمسح إشعارات الرسائل العامة عند فتح الـ Inbox
+    Notification.objects.filter(user=request.user, is_read=False, link__contains='/messages/').update(is_read=True)
     
     return render(request, 'messaging/inbox.html', {'conversations': conversations})
 
